@@ -113,6 +113,7 @@ public class UserServiceImpl implements IUserService {
 			//用户不存在
 			return ServerResponse.createByErrorMessage("用户不存在");
 		}
+		//防止被恶意调用接口，假如没有taken那么就可以修改任意用户密码。（经典的横向越权）
 		String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
 		if (StringUtils.isBlank(token)){
 			return ServerResponse.createByErrorMessage("token无效或者过期");
